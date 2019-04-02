@@ -42,7 +42,7 @@ class DigitClassifier(object):
 
         return x_train, x_test, input_shape
 
-    def convert_to_matrices(self, y_train, y_test):
+    def convert_outputs(self, y_train, y_test):
         # Convert class vectors to binary class matrices
         y_train = keras.utils.to_categorical(y_train, self.num_classes)
         y_test = keras.utils.to_categorical(y_test, self.num_classes)
@@ -85,12 +85,14 @@ class DigitClassifier(object):
 if __name__ == '__main__':
     x_train, y_train, x_test, y_test = prepare_data()
 
-    dc = DigitClassifier()
-    x_train, x_test, input_shape = dc.reshape_inputs(x_train, x_test)
-    y_train, y_test = dc.convert_to_matrices(y_train, y_test)
+    clf = DigitClassifier()
+    x_train, x_test, input_shape = clf.reshape_inputs(x_train, x_test)
+    y_train, y_test = clf.convert_outputs(y_train, y_test)
 
-    score = dc.fit_and_score(input_shape, x_train, y_train, x_test, y_test)
+    score = clf.fit_and_score(input_shape, x_train, y_train, x_test, y_test)
 
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
 
+    # Test loss: 0.025867073261344378
+    # Test accuracy: 0.992
